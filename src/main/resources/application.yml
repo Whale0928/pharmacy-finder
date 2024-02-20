@@ -1,5 +1,18 @@
+server:
+  port: 8088
 jwt:
   secret:
     key: in_a_hole_in_the_ground_there_lived_a_hobbit # hobbit first line
   expire:
     length: 86400000 # 1 day
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    jpa:
+      hibernate:
+        ddl-auto: create-drop
+        show-sql: true

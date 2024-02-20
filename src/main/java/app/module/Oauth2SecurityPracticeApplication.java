@@ -1,4 +1,4 @@
-package app.multimodule.oauth2securitypractice;
+package app.module;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

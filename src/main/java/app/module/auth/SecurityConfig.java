@@ -1,53 +1,45 @@
-package app.multimodule.oauth2securitypractice.config.security;
+package app.module.auth;
 
-import app.multimodule.oauth2securitypractice.jwt.CustomJwtFilter;
-import app.multimodule.oauth2securitypractice.jwt.JwtAccessDeniedHandler;
-import app.multimodule.oauth2securitypractice.jwt.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-@RequiredArgsConstructor
-@Slf4j
-@Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-    private final CustomJwtFilter customJwtFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final CustomUserDetailService customUserDetailService;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
 
-                .httpBasic().disable()
-                .formLogin().disable()
-                .sessionManagement().sessionCreationPolicy(STATELESS) // 서버 상태 관리 : 무상태
+                .formLogin().disable() // 시큐리티 기본 로그인 페이지 사용 안함
+                .httpBasic().disable()  // ajax등 다양한 방식으로 통신하기 위해 기본 설정을 해제
+
+                .headers().frameOptions().disable()
+
                 .and()
+                .sessionManagement().sessionCreationPolicy(STATELESS) // 서버 상태 관리 : 무상태
 
-                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(c -> c.authenticationEntryPoint(jwtAuthenticationEntryPoint).accessDeniedHandler(jwtAccessDeniedHandler))
-
+                .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/oauth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-
+                .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
+                        .userInfoEndpoint()
+                        .userService(customUserDetailService)
+                        .and()
+                        .successHandler(oAuth2LoginSuccessHandler))
                 .build();
     }
 
@@ -61,10 +53,5 @@ public class SecurityConfig {
         config.addAllowedMethod("*");  // 모든 post, get, put, delete, patch 요청을 허용
         source.registerCorsConfiguration("/**", config); // 모든 url에 대해 위의 설정을 적용
         return new CorsFilter(source);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }
