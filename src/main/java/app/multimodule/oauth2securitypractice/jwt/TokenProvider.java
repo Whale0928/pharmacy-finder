@@ -1,6 +1,7 @@
 package app.multimodule.oauth2securitypractice.jwt;
 
 import app.multimodule.member.MemberInfo;
+import app.multimodule.member.service.MemberInfoService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -28,10 +29,15 @@ public class TokenProvider {
     private final long tokenValidityInSeconds;
     private Key key;
 
+
+    //@Autowired
+    private MemberInfoService memberInfoService;
+
     public TokenProvider(String secret, long tokenValidityInSeconds) {
         this.secret = secret;
         this.tokenValidityInSeconds = tokenValidityInSeconds;
 
+        // 시크릿 값을 복호화(decode) 하여 키 변수에 할당
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -70,7 +76,7 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        MemberInfo memberInfo = (MemberInfo) memberService.loadUserByUsername(claims.getSubject());
+        MemberInfo memberInfo = (MemberInfo) memberInfoService.loadUserByUsername(claims.getSubject());
         memberInfo.setAuthorities(authorities);
 
         return new UsernamePasswordAuthenticationToken(memberInfo, token, authorities);

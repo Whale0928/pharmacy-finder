@@ -1,1 +1,5 @@
-
+jwt:
+  secret:
+    key: in_a_hole_in_the_ground_there_lived_a_hobbit # hobbit first line
+  expire:
+    length: 86400000 # 1 day
