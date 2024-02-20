@@ -29,7 +29,6 @@ public class TokenProvider {
     private final long tokenValidityInSeconds;
     private Key key;
 
-
     //@Autowired
     private MemberInfoService memberInfoService;
 
