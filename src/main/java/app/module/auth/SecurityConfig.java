@@ -32,7 +32,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/api/oauth/**").permitAll()
+                        //.requestMatchers("/api/oauth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
