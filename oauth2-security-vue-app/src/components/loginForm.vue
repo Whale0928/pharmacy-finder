@@ -17,7 +17,7 @@
 window.onload = function () {
   document.getElementById('google-login-btn').addEventListener('click', function () {
     const client_id = '778075682082-6tkmcmtkh60nfo1dajbe6vvo97mhckob.apps.googleusercontent.com';
-    const redirect_uri = 'http://localhost:8088/api/oauth/google';
+    const redirect_uri = 'http://localhost:8088/login/oauth2/code/google';
     const scope = 'email profile';
     const response_type = 'code';
     window.open(`https://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope}&response_type=${response_type}&access_type=online`, '_blank');

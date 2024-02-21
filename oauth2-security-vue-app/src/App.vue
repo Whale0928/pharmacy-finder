@@ -1,14 +1,10 @@
 <script setup>
-import LoginForm from "@/components/loginForm.vue";
 </script>
 
 <template>
   <header>
-    <div>
-      <LoginForm/>
-    </div>
   </header>
-
+  <router-view/> <!-- Add this line -->
 </template>
 
 <style scoped>
