@@ -1,7 +1,6 @@
 server:
   port: 8088
 
-
 jwt:
   secret:
     key: in_a_hole_in_the_ground_there_lived_a_hobbit # hobbit first line
@@ -29,5 +28,5 @@ spring:
         registration:
           google:
             client-id: 778075682082-6tkmcmtkh60nfo1dajbe6vvo97mhckob.apps.googleusercontent.com
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-secret: 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
             scope: email, profile
