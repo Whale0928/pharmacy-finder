@@ -1,7 +1,10 @@
 package app.module.auth;
 
+import app.module.auth.handler.OAuth2AuthenticationSuccessHandler;
+import app.module.auth.service.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -11,12 +14,12 @@ import org.springframework.web.filter.CorsFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
-    private final CustomUserDetailService customUserDetailService;
-
+    private final CustomOauth2UserService customUserDetailService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,14 +35,14 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        //.requestMatchers("/api/oauth/**").permitAll()
+                        .requestMatchers("/api/oauth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
-                        .userInfoEndpoint()
-                        .userService(customUserDetailService)
+                        .userInfoEndpoint().userService(customUserDetailService)
                         .and()
-                        .successHandler(oAuth2LoginSuccessHandler))
+                        .successHandler(oAuth2AuthenticationSuccessHandler))
+
                 .build();
     }
 
@@ -54,4 +57,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config); // 모든 url에 대해 위의 설정을 적용
         return new CorsFilter(source);
     }
+
 }
