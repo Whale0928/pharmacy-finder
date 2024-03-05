@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  pharmacy-finder-redis:
+    container_name: pharmacy-finder-redis
+    build:
+      dockerfile: Dockerfile
+      context: ./redis
+    image: zcx5674/pharmacy-finder-redis
+    ports:
+      - "6379:6379"
+  pharmacy-finder-maria-db:
+    container_name: pharmacy-finder-maria-db
+    build:
+      dockerfile: Dockerfile
+      context: ./database
+    image: zcx5674/pharmacy-finder-maria-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pharmacy_finder
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./database/config:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
