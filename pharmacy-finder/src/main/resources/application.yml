@@ -17,9 +17,9 @@ spring:
       on-profile: local
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:postgresql://localhost:3306/pharmacy-finder
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://localhost:3306/pharmacy-finder-maria-db
+    username: user
+    password: pharmacy_finder_password
   data:
     redis:
       host: localhost

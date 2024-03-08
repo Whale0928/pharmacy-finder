@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./redis
-    image: zcx5674/pharmacy-finder-redis
+    image: deadwhale/pharmacy-finder-redis
     ports:
       - "6379:6379"
   pharmacy-finder-maria-db:
@@ -13,12 +13,12 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./database
-    image: zcx5674/pharmacy-finder-maria-db
+    image: deadwhale/pharmacy-finder-maria-db
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pharmacy_finder
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: pharmacy_finder_db
+      MYSQL_USER: pharmacy_finder_user
+      MYSQL_PASSWORD: pharmacy_finder_password
     volumes:
       - ./database/config:/etc/mysql/conf.d
     ports:
