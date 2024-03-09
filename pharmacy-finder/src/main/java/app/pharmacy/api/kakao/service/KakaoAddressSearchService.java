@@ -20,7 +20,6 @@ import static org.springframework.http.HttpMethod.GET;
 @Service
 public class KakaoAddressSearchService {
 
-    private final RestTemplate rest;
     private final KakaoUriBuilderService kakaoUriBuilderService;
     private final RestTemplate restTemplate;
 
