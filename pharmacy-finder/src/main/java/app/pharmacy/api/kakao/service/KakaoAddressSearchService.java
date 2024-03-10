@@ -27,7 +27,9 @@ public class KakaoAddressSearchService {
     private String kakaoRestApiKey;
 
     public KakaoApiResponseDto requestAddressSearch(String address) {
-        Objects.requireNonNull(address, "address must not be null");
+        if (Objects.isNull(address)) {
+            return null;
+        }
 
         URI uri = kakaoUriBuilderService.buildAddressSearchUri(address);
 
