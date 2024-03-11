@@ -18,7 +18,7 @@ import org.hibernate.annotations.Comment;
 @Getter
 @Comment("약국")
 @Entity(name = "pharmacy")
-public class Pharmacy {
+public class Pharmacy extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
