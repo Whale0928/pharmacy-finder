@@ -8,9 +8,17 @@
 
 #### Requirements Setting
 
-- JDK 17
+- springboot 3.1.9
+- jdk 17
+- mariadb
+- redis
+- gradle
 - docker
-    - [www.docker.com](https://www.docker.com/products/docker-desktop)
+- kakao map api
+
+### Reference
+
+- [docker](https://www.docker.com/products/docker-desktop)
 - [국립중앙의료원_전국 약국 정보 조회 서비스](https://www.data.go.kr/data/15000576/openapi.do)
 - [KAKAO MAP API](https://apis.map.kakao.com/)
 
