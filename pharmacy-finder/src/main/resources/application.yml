@@ -26,7 +26,7 @@ spring:
       port: 6379
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate # 엔티티와 테이블이 매핑되는 것을 검증
     show-sql: true
 
 ---

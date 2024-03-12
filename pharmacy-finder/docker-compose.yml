@@ -21,5 +21,6 @@ services:
       MYSQL_PASSWORD: pharmacy_finder_password
     volumes:
       - ./database/config:/etc/mysql/conf.d
+      - ./database/init:/docker-entrypoint-initdb.d
     ports:
       - "3306:3306"

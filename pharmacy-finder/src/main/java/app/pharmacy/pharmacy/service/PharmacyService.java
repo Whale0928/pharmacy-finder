@@ -23,6 +23,6 @@ public class PharmacyService {
             return "Pharmacy with id " + id + " not found";
         }
 
-        return pharmacy.changePharmacyAddress(newAddress);
+		return pharmacy.changePharmacyAddress(newAddress);
     }
 }
