@@ -20,26 +20,29 @@ import static org.springframework.http.HttpMethod.GET;
 @Service
 public class KakaoAddressSearchService {
 
-    private final KakaoUriBuilderService kakaoUriBuilderService;
-    private final RestTemplate restTemplate;
+	private final KakaoUriBuilderService kakaoUriBuilderService;
+	private final RestTemplate restTemplate;
 
-    @Value("${kakao.rest.api.key}")
-    private String kakaoRestApiKey;
+	@Value("${kakao.rest.api.key}")
+	private String kakaoRestApiKey;
 
-    public KakaoApiResponseDto requestAddressSearch(String address) {
-        if (Objects.isNull(address)) {
-            return null;
-        }
+	@Value("${kakao.rest.api.prefix}")
+	private String kakaoRestApiPrefix;
 
-        URI uri = kakaoUriBuilderService.buildAddressSearchUri(address);
+	public KakaoApiResponseDto requestAddressSearch(String address) {
+		if (Objects.isNull(address)) {
+			return null;
+		}
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(AUTHORIZATION, "KakaoAK " + kakaoRestApiKey);
+		URI uri = kakaoUriBuilderService.buildAddressSearchUri(address);
 
-        HttpEntity<?> entity = new HttpEntity<>(headers);
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(AUTHORIZATION, kakaoRestApiPrefix + kakaoRestApiKey);
 
-        return restTemplate
-                .exchange(uri, GET, entity, KakaoApiResponseDto.class)
-                .getBody();
-    }
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		return restTemplate
+			.exchange(uri, GET, entity, KakaoApiResponseDto.class)
+			.getBody();
+	}
 }
