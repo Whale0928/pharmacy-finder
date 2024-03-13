@@ -9,13 +9,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  profiles:
+    include: test-secrets
 
 pharmacy:
   recommendation:
     base:
       url: http://localhost/dir/
 
-kakao:
-  rest:
-    api:
-      key: ${KAKAO_REST_API_KEY}
