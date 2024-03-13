@@ -1,5 +1,4 @@
 HELP.md
-oauth2-security-practice-api/.gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -67,3 +66,4 @@ coverage
 *.tsbuildinfo
 
 /pharmacy-finder/.env
+application-test-secrets.yml
