@@ -1,4 +1,4 @@
-package app.pharmacy.pharmacy.entity;
+package app.pharmacy.global.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

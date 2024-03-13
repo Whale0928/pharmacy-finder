@@ -1,5 +1,6 @@
 package app.pharmacy.pharmacy.entity;
 
+import app.pharmacy.global.domain.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.Comment;
 @Getter
 @Comment("약국")
 @Entity(name = "pharmacy")
-public class Pharmacy extends BaseTimeEntity{
+public class Pharmacy extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
