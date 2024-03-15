@@ -92,7 +92,7 @@ class KakaoAddressSearchServiceRetryTest extends AbstractIntegrationContainerBas
 		//then
 		System.out.println("apiResult = " + apiResult);
 		assertEquals(2, mockWebServer.getRequestCount()); // 2번의 요청이 발생했는지 확인
-		assertEquals(apiResult, KakaoApiResponseDto.isEmpty());
+		assertEquals(apiResult, KakaoApiResponseDto.empty());
 
 	}
 

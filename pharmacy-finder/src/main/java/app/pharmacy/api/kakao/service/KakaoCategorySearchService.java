@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.Objects;
 
 import static java.time.LocalTime.now;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -22,11 +21,11 @@ import static org.springframework.http.HttpMethod.GET;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class KakaoAddressSearchService {
+public class KakaoCategorySearchService {
 
+	private static final String PHARMACY_CATEGORY = "PM9";    // 약국
 	private final KakaoUriBuilderService kakaoUriBuilderService;
 	private final RestTemplate restTemplate;
-
 	@Value("${kakao.rest.api.key}")
 	private String kakaoRestApiKey;
 
@@ -38,12 +37,9 @@ public class KakaoAddressSearchService {
 		maxAttempts = 2, // 최대 재시도 횟수
 		backoff = @Backoff(delay = 2000) // 재시도 간격 2초
 	)
-	public KakaoApiResponseDto requestAddressSearch(String address) {
-		if (Objects.isNull(address)) {
-			return null;
-		}
+	public KakaoApiResponseDto requestCategorySearch(double lat, double lon, double radius) {
 
-		URI uri = kakaoUriBuilderService.buildAddressSearchUri(address);
+		URI uri = kakaoUriBuilderService.buildCategorySearchUri(PHARMACY_CATEGORY, lat, lon, radius);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(AUTHORIZATION, kakaoRestApiPrefix + " " + kakaoRestApiKey);
@@ -57,7 +53,7 @@ public class KakaoAddressSearchService {
 
 	@Recover
 	public KakaoApiResponseDto recover(Exception exception, String address) {
-		log.error("now : {} Kakao Address Search API 호출 중 에러가 발생했습니다. address: {}", now(), address, exception);
+		log.error("now : {} Kakao Category Search API 호출 중 에러가 발생했습니다. address: {}", now(), address, exception);
 		return KakaoApiResponseDto.empty();
 	}
 }

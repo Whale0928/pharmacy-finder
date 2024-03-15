@@ -10,23 +10,31 @@ import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"addressName", "latitude", "longitude"})
-@ToString(of = {"addressName", "latitude", "longitude"})
+@EqualsAndHashCode
+@ToString(of = {"placeName", "addressName", "latitude", "longitude", "distance"})
 public class DocumentDto {
 
-    @JsonProperty("address_name")
-    private String addressName;
+	@JsonProperty("place_name")
+	private String placeName; //장소명
 
-    @JsonProperty("y")
-    private double latitude; // 위도
+	@JsonProperty("address_name")
+	private String addressName;
 
-    @JsonProperty("x")
-    private double longitude; // 경도
+	@JsonProperty("y")
+	private double latitude; // 위도
+
+	@JsonProperty("x")
+	private double longitude; // 경도
+
+	@JsonProperty("distance")
+	private Double distance; // 중심좌표까지의 거리
 
 	@Builder
-	public DocumentDto(String addressName, double latitude, double longitude) {
+	public DocumentDto(String placeName, String addressName, double latitude, double longitude, Double distance) {
+		this.placeName = placeName;
 		this.addressName = addressName;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.distance = distance;
 	}
 }

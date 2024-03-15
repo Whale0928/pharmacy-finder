@@ -24,7 +24,11 @@ public class KakaoApiResponseDto {
     private List<DocumentDto> documents;
 
 
-	public static KakaoApiResponseDto isEmpty(){
+	public static KakaoApiResponseDto empty(){
 		return new KakaoApiResponseDto(null, List.of());
+	}
+
+	public boolean isListEmpty(){
+		return documents.isEmpty();
 	}
 }
