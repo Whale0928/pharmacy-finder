@@ -3,12 +3,14 @@ package app.pharmacy.api.kakao.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
+@EqualsAndHashCode(of = {"addressName", "latitude", "longitude"})
 @ToString(of = {"addressName", "latitude", "longitude"})
 public class DocumentDto {
 
