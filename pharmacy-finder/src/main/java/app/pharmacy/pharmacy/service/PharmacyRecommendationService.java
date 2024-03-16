@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * 약국 추천 서비스 클래스
@@ -23,14 +22,14 @@ public class PharmacyRecommendationService {
 	private final KakaoAddressSearchService kakaoMapAPiService;
 	private final DirectionService directionService;
 
-	public Object recommend(String address) {
+	public List<Direction> recommend(String address) {
 
 		//카카오 api로 위치 정보 요청
 		var kakaoApiResponse = kakaoMapAPiService.requestAddressSearch(address);
 
 		if (Objects.isNull(kakaoApiResponse) || kakaoApiResponse.isListEmpty()) {
 			log.error("{} :: Kakao API response is null", LocalDateTime.now());
-			return Optional.empty();
+			return List.of();
 		}
 		log.info("{} :: Kakao API response :: {}", LocalDateTime.now(), kakaoApiResponse);
 
